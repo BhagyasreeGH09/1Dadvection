@@ -9,27 +9,26 @@ L2_errors=Float64[]
 Linf_errors=Float64[]
 deltas = Float64[]
 solutions = []
-
-for dx in [0.01,0.005,0.0025,0.002,0.001]
+dt=0.001
+M = Int(T / dt)
+for dx in [0.01,0.005,0.0025,0.002]
 
  N=Int(L/dx)+1
  x=LinRange(0,1,N)
 
-dt=0.5*dx/c
- M = Int(T / dt)
-
- 
 v=c*(dt/dx)
  u = [sin(2π * xi) for xi in x]
 
  for j in 1:M
-    uold=copy(u)
-    for i in 2:N-1
-        u[i]=uold[i]-v*(uold[i+1]-uold[i-1])/2+ (v^2)*(uold[i+1] - 2*uold[i] + uold[i-1])/2
-    end
+   uold=copy(u)
+   for i in 2:N-1
+      u[i]=uold[i]-v*(uold[i+1]-uold[i-1])/2+ (v^2)*(uold[i+1] - 2*uold[i] + uold[i-1])/2
+end
     u[N]= uold[N] - v*(uold[1] - uold[N-1])/2 + (v^2)*(uold[1] - 2*uold[N] + uold[N-1])/2
-    u[1] = uold[1] -v*(uold[2] - uold[N]) + (v^2)*(uold[2] - 2*uold[1] + uold[N])/2
- end 
+    #u[1] = uold[1] -v*(uold[2] - uold[N])/2 + (v^2)*(uold[2] - 2*uold[1] + uold[N])/2
+    u[1]=u[N]
+end
+
 
   u_exact = [sin(2π * (xi - c*T)) for xi in x]
 

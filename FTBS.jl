@@ -16,7 +16,7 @@ for dx in [0.01,0.005,0.0025,0.002,0.001]
  N=Int(L/dx)+1
  x=LinRange(0,1,N)
 
-dt=0.5*dx/c
+ dt=0.5*dx/c
  M = Int(T / dt)
 
  u = [sin(2π * xi) for xi in x]
