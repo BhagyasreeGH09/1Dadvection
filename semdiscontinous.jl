@@ -64,12 +64,13 @@ initial_condition_step(x) = (0.2 ≤ x ≤ 0.5) ? 1.0 : 0.0
  soln = solve(ode, RDPK3SpFSAL49(); dt=dt,abstol = 1.0e-9, reltol = 1.0e-9,
              ode_default_options()...)
 
- plot(vec(x), vec(soln.u[end]), label = "Numerical solution at t=$(t[2])", legend = :topleft,
+ plot( xlabel="x", ylabel="u(x,T)",vec(x), vec(soln.u[end]), label = "Numerical solution", legend = :topleft,
      lw = 3)
 
 x_fine = LinRange(0, 2, 1000)
 u_exact_fine = [if  0.2<=xi - c*T <= 0.5 1.0 else 0.0 end for xi in x_fine]
-plot!(x_fine, u_exact_fine, lw=2, linestyle=:dash, color=:black, label="Exact solution at t=$(t[2])")
+plot!(x_fine, u_exact_fine, lw=2, linestyle=:dash, color=:black, label="Exact solution")
+ savefig("SEM_discont_advection.png") 
 display(current())
 
 

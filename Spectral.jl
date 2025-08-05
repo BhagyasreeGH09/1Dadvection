@@ -7,7 +7,7 @@ a=0
 b=2
 T=1
 c=1
-polydeg=4
+polydeg=3
 
 initial_condition_sine_wave(x)=sin(2π*x)
 function advection_solve(dx;T,polydeg,c)
@@ -77,8 +77,9 @@ for dx in [0.25,0.2,0.125,0.1,0.05]
   push!(L2_errors, sqrt((x[2]-x[1]) * sum(error.^2)))
   push!(deltas, x[2]-x[1])
  if dx==0.05
-  plot(title="Solutions at final time T=$T", xlabel="x", ylabel="u(x,T)", legend=:bottomleft)
+  plot( xlabel="x", ylabel="u(x,T)", legend=:bottomleft)
   plot!(vec(x),vec(u),label=false)
+  savefig("SEMadvection.png") 
   display(current())
  end
 end
